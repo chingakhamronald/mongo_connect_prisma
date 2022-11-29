@@ -10,9 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id      String @id @default(uuid()) @map("_id")
-  name    String
-  address String
-  orderId String
+model orders {
+  id            String          @id @default(uuid()) @map("_id") @db.ObjectId
+  totalAmount   Int
+  orderNo       String          @unique
+  orderPayments orderPayments[]
+}
+
+model orderPayments {
+  id      String  @id @default(uuid()) @map("_id") @db.ObjectId
+  orders  orders? @relation(fields: [orderNo], references: [orderNo])
+  orderNo String
+  cardNo  String
+  status  String
 }

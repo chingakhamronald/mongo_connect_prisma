@@ -1,32 +1,34 @@
 const prisma = require("../../constant/client");
 
 module.exports = {
-  async GetUsers(req, res) {
+  async GetOrders(req, res) {
     try {
-      const users = await prisma.user.findMany();
+      const users = await prisma.orders.findMany();
       res.json(users);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   },
 
-  async GetUser(req, res) {
+  async GetOrder(req, res) {
     const id = req.params.id;
     try {
-      const user = await prisma.user.findUnique({
+      const user = await prisma.orders.findUnique({
         where: {
           id: id,
         },
+        include: { orderPayments: true },
       });
       res.json(user);
+      console.log("users....", user);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   },
 
-  async AddUser(req, res) {
+  async AddOrder(req, res) {
     try {
-      const users = await prisma.user.create({
+      const users = await prisma.orders.create({
         data: {
           orderId: req.body.orderId,
           address: req.body.address,
@@ -39,11 +41,11 @@ module.exports = {
     }
   },
 
-  async UpdateUser(req, res) {
+  async UpdateOrder(req, res) {
     const id = req.params.id;
 
     try {
-      await prisma.user.update({
+      await prisma.orders.update({
         where: {
           id: id,
         },
@@ -59,10 +61,10 @@ module.exports = {
     }
   },
 
-  async DeleteUser(req, res) {
+  async DeleteOrder(req, res) {
     const id = req.params.id;
     try {
-      await prisma.user.delete({
+      await prisma.orders.delete({
         where: {
           id: id,
         },

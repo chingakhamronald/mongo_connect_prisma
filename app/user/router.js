@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const Controller = require("./controller");
 
-router.get("", Controller.GetUsers);
-router.get("/getById/:id", Controller.GetUser);
-router.post("/addUser", Controller.AddUser);
-router.patch("/updateUser/:id", Controller.UpdateUser);
-router.delete("/deleteUser/:id", Controller.DeleteUser);
+router.get("", Controller.GetOrders);
+router.get("/getById/:id", Controller.GetOrder);
+router.post("/addUser", Controller.AddOrder);
+router.patch("/updateUser/:id", Controller.UpdateOrder);
+router.delete("/deleteUser/:id", Controller.DeleteOrder);
 
 module.exports = router;
