@@ -12,15 +12,25 @@ datasource db {
 
 model orders {
   id            String          @id @default(uuid()) @map("_id") @db.ObjectId
-  totalAmount   Int
+  flightNumber  String
+  crew          Json
+  bookingInfo   Json
+  destination   String
+  origin        String
   orderNo       String          @unique
   orderPayments orderPayments[]
 }
 
 model orderPayments {
-  id      String  @id @default(uuid()) @map("_id") @db.ObjectId
-  orders  orders? @relation(fields: [orderNo], references: [orderNo])
-  orderNo String
-  cardNo  String
-  status  String
+  id          String   @id @default(uuid()) @map("_id") @db.ObjectId
+  cardNo      String
+  status      String
+  timestamp   DateTime
+  amount      Int
+  referenceId String
+  source      String
+  paymentType String
+  reason      String?
+  orders      orders?  @relation(fields: [orderNo], references: [orderNo])
+  orderNo     String
 }
